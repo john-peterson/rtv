@@ -32,7 +32,7 @@ def copy_linux(text):
 
     def get_command_name():
         # Checks for the installation of xsel or xclip
-        for cmd in ['xsel', 'xclip']:
+        for cmd in ['termux-clipboard-set', 'xsel', 'xclip']:
             cmd_exists = subprocess.call(
                 ['which', cmd],
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE) == 0
@@ -48,4 +48,4 @@ def copy_linux(text):
     if cmd_name is None:
         raise ProgramError("External copy application not found")
 
-    _subprocess_copy(text, cmd_args.get(cmd_name))
+    _subprocess_copy(text, cmd_name if cmd_args.get(cmd_name) is None else cmd_args.get(cmd_name))
